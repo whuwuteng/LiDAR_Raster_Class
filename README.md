@@ -45,7 +45,13 @@ This part is already in the code repository, so it doesn't matter.
 
 ## Example
 
-There is an example using the LiDARHD :
+It's easy to use the code, the comande line is :
+
+```
+EXE LAS GSD TIF
+```
+
+ there is an example using the LiDARHD :
 
 ```
  cd LiDAR_Raster_Class
@@ -54,6 +60,7 @@ There is an example using the LiDARHD :
  cmake ..
  make -j4
  
+ # EXE LAS GSD TIF
  ./ConvertLasImage '/home/whuwuteng/AI4GEO-Toulouse-IMAGE/ALS/LHD_FXX_0574_6277_PTS_C_LAMB93_IGN69.copc.laz' 0.15 '/home/whuwuteng/AI4GEO-Toulouse-IMAGE/ALS/raster2.tif'
 ```
 
