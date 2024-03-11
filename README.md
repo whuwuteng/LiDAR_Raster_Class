@@ -2,13 +2,13 @@
 
 ## Use the sampling to create raster image with classification property
 
-To raster the LiDAR point cloud, we can only save one label for each pixel, because **building** is the important part in the project(GENESE). So if in the pixel, there is a building point, we set this pixel to building label.
+To raster the LiDAR point cloud, to save the memory, we can only save one label for each pixel, because **building** is the important part in the project (GENESE). So if in the pixel, there is a building point, we set this pixel to building label. For the other class, we save the last label. 
 
-The out put file is a Tiff file with tfw, so that this file can have the geo-information, and this can be open with QGIS. 
+The out put file is a **Tiff file with tfw**, so that this file can have the geo-information, and this can be open with **QGIS**, so that the output can be overlap with the other data. 
 
 ## Dependency
 
-The code depends on my code project :
+The code depends on my code projects :
 
 ### [OpenImageoiioLib](https://github.com/whuwuteng/OpenImageoiioLib)
 
