@@ -5,16 +5,70 @@
 #include <math.h>
 
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <vector>
 
 #include "WuLasLib.h"
 #include "OpenImageoiio.h"
 
+// for the double, avoid to use ==
+const double EPS = 1.0e-4;
+
+// set the priority file
+bool LoadFilePriority(const char * pszFile, double * pPriority)
+{
+    std::fstream infile(pszFile);
+    if (! infile){
+        std::cout << "Can not open the file : " << pszFile << std::endl;
+        return false;
+    }
+    
+    std::string line;
+    while (std::getline(infile, line)){
+        std::istringstream iss(line);
+        int nClass = 0;
+        double Weight = 0.0;
+        if (!(iss >> nClass >> Weight)) { 
+            break; 
+        }
+        if (nClass > 0 && nClass < 256){
+            pPriority[nClass] = Weight;
+        }
+    }
+    return true;
+}
+
+// write a class selection
+// but the class is not continuous
+void UpdateWithPriority(unsigned char * pOldClass, double * pOldZ, double * pPriority,  unsigned char newClass, double newZValue)
+{
+    // no point in this pixel
+    if (* pOldClass == 0){
+        * pOldClass = newClass;
+        * pOldZ = newZValue;
+    }
+    else {
+        if (pPriority[newClass] > pPriority[* pOldClass]){
+            * pOldClass = newClass;
+            * pOldZ = newZValue;
+        }
+        else if (fabs(pPriority[newClass] - pPriority[* pOldClass]) < EPS){
+            if (* pOldZ < newZValue){
+                * pOldClass = newClass;
+                * pOldZ = newZValue;
+            }
+        }
+    }
+}
+
 int main(int argc, char const *argv[])
 {
-    if (argc != 4){
+    if (argc != 4 && argc != 5){
         std::cout << "ConvertLasImage Las GSD Tif" << std::endl;
+        std::cout << "If there is no weight, so the max Z is used." << std::endl;
+        std::cout << "Or: " << std::endl;
+        std::cout << "ConvertLasImage Las GSD Tif Weight" << std::endl;
         return -1;
     }
 
@@ -24,6 +78,13 @@ int main(int argc, char const *argv[])
     // LiDARHD
 	//double gridsize = 0.15;
     double gridsize = atof(argv[2]);
+    
+    // max is 255
+    double Priority[256] = { 0 };
+    
+    if (argc == 5){
+        LoadFilePriority(argv[4], Priority);
+    }
 
 	CWuLasLib srcLas;
 	srcLas.Open(szSrcLas);
@@ -65,16 +126,24 @@ int main(int argc, char const *argv[])
 	unsigned char * pLabelClass = new unsigned char[nRows * nCols];
     memset(pLabelClass, 0, sizeof(unsigned char) * nRows * nCols);
     
+    double * pZValue = new double[nRows * nCols];
+    memset(pZValue, 0, sizeof(double) * nRows * nCols);
+    
     for (int i = 0; i < nPoints; ++i){
 		int x = int((pFullPoint[i].x - minx)/gridsize);
 		int y = int((pFullPoint[i].y - miny)/gridsize);
         
         // system different
         y = nRows - 1 - y;
+/*
         if (pLabelClass[y * nCols + x] != 6){
             pLabelClass[y * nCols + x] = (unsigned char)(pFullPoint[i].classification);
         }
+*/
+        int nIndex = y * nCols + x;
+        UpdateWithPriority(pLabelClass + nIndex, pZValue + nIndex, Priority, pFullPoint[i].classification, pFullPoint[i].z);
     }
+    delete []pZValue;               pZValue = NULL;
     
     std::cout << "Convert to raster image..." << std::endl;
 
@@ -119,6 +188,21 @@ int main(int argc, char const *argv[])
                         pRasterImage[(i * nCols + j) * 3] = 85;
                         pRasterImage[(i * nCols + j) * 3 + 1] = 85;
                         pRasterImage[(i * nCols + j) * 3 + 2] = 255;
+                        break;
+                    case 64 :
+                        pRasterImage[(i * nCols + j) * 3] = 114;
+                        pRasterImage[(i * nCols + j) * 3 + 1] = 155;
+                        pRasterImage[(i * nCols + j) * 3 + 2] = 111;
+                        break;
+                    case 65 :
+                        pRasterImage[(i * nCols + j) * 3] = 213;
+                        pRasterImage[(i * nCols + j) * 3 + 1] = 180;
+                        pRasterImage[(i * nCols + j) * 3 + 2] = 60;
+                        break;
+                    case 67 :
+                        pRasterImage[(i * nCols + j) * 3] = 164;
+                        pRasterImage[(i * nCols + j) * 3 + 1] = 113;
+                        pRasterImage[(i * nCols + j) * 3 + 2] = 88;
                         break;
                     default :
                         pRasterImage[(i * nCols + j) * 3] = 255;
