@@ -199,6 +199,11 @@ int main(int argc, char const *argv[])
                         pRasterImage[(i * nCols + j) * 3 + 1] = 180;
                         pRasterImage[(i * nCols + j) * 3 + 2] = 60;
                         break;
+                    case 66 :
+                        pRasterImage[(i * nCols + j) * 3] = 141;
+                        pRasterImage[(i * nCols + j) * 3 + 1] = 90;
+                        pRasterImage[(i * nCols + j) * 3 + 2] = 153;
+                        break;
                     case 67 :
                         pRasterImage[(i * nCols + j) * 3] = 164;
                         pRasterImage[(i * nCols + j) * 3 + 1] = 113;

@@ -27,7 +27,9 @@ The class in LiDARHD, detail can find in the [document](/doc/DC_LiDAR_HD_1-0_PTS
 |66| Points virtuels|
 |67| Divers - bâtis|
 
-For class 66, "Seuls les « nuages de points optimisés » contiennent des points classés avec cette valeur.", so at present, this class is not shown in the image.
+~~For class 66, "Seuls les « nuages de points optimisés » contiennent des points classés avec cette valeur.", so at present, this class is not shown in the image.~~
+
+For the class **64-67**, the color bar depends on the QGIS label, so the color probably not  same with QGIS.
 
 ## Dependency
 
