@@ -28,6 +28,10 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/IO)
 
 add_library(WuLasLib SHARED ${laslib_src} ${laszip_src} ${libWuLasLib_src})
 add_executable(ConvertLasImage ${CMAKE_CURRENT_LIST_DIR}/example/lidar_raster.cpp ${io_src})
+add_executable(ConvertLasImageHeigth ${CMAKE_CURRENT_LIST_DIR}/example/lidar_raster_height.cpp ${io_src})
 
 target_link_libraries(ConvertLasImage WuLasLib)
 target_link_libraries(ConvertLasImage OpenImageIO)
+
+target_link_libraries(ConvertLasImageHeigth WuLasLib)
+target_link_libraries(ConvertLasImageHeigth OpenImageIO)
