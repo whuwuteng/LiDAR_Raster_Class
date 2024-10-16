@@ -85,6 +85,11 @@ int main(int argc, char const *argv[])
     if (argc == 5){
         LoadFilePriority(argv[4], Priority);
     }
+    // the defaut is building
+    else{
+        // building is 6
+        Priority[6] = 1.0;
+    }
 
 	CWuLasLib srcLas;
 	srcLas.Open(szSrcLas);
