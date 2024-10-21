@@ -14,6 +14,7 @@
 
 // for the double, avoid to use ==
 const double EPS = 1.0e-4;
+unsigned char BUILDING = 6;
 
 // set the priority file
 bool LoadFilePriority(const char * pszFile, double * pPriority)
@@ -88,7 +89,7 @@ int main(int argc, char const *argv[])
     // the defaut is building
     else{
         // building is 6
-        Priority[6] = 1.0;
+        Priority[BUILDING] = 1.0;
     }
 
 	CWuLasLib srcLas;

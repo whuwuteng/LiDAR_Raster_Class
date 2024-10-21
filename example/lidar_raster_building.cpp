@@ -89,7 +89,7 @@ int main(int argc, char const *argv[])
     // the defaut is building
     else{
         // building is 6
-        Priority[6] = 1.0;
+        Priority[BUILDING] = 1.0;
     }
 
 	CWuLasLib srcLas;
