@@ -97,6 +97,25 @@ The example is shown (convert to png) :
 | :----------------------------------------------------------: |
 |                *Raster image*                |
 
+## Update
+
+In order to analysis the building footprint in 2D, so only building class is considered in the output, so there are two versions of code, only produce the color of building :
+
+```  
+./ConvertLasImageBat '/home/TWu-Admin/Lyon/all.copc.laz' 0.15 '/home/TWu-Admin/Lyon/all.copc2.tif'
+```
+
+The result is shown  (convert to png) : 
+| <img src="/figures/lyon.png" width="700" alt="*Raster image*" /> |
+| :----------------------------------------------------------: |
+|                *Raster image Lyon*                |
+
+The second version is similar, but the height of the building is an important information in 3D, so the height of the building is saved in an image, the command line is : 
+
+```
+/ConvertLasImageHeigth '/home/TWu-Admin/Lyon/all.copc.laz'  0.15 '/home/TWu-Admin/Lyon/all.copc3.tif'
+```
 
 ## MAINTENANCE
+
 If you think you have any problem, contact [Teng Wu]<whuwuteng@gmail.com>
