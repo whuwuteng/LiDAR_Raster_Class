@@ -114,6 +114,8 @@ Only building class image is shown  (convert to png) :
 | <img src="/figures/lyon_bat.png" width="700" alt="*Raster image*" /> |
 | :----------------------------------------------------------: |
 |                *Raster image Lyon building*                |
+
+
 The second version is similar, but the height of the building is an important information in 3D, so the height of the building is saved in an image, the command line is : 
 
 ```
