@@ -105,11 +105,15 @@ In order to analysis the building footprint in 2D, so only building class is con
 ./ConvertLasImageBat '/home/TWu-Admin/Lyon/all.copc.laz' 0.15 '/home/TWu-Admin/Lyon/all.copc2.tif'
 ```
 
-The result is shown  (convert to png) : 
+The origin all class image is shown  (convert to png) : 
 | <img src="/figures/lyon.png" width="700" alt="*Raster image*" /> |
 | :----------------------------------------------------------: |
 |                *Raster image Lyon*                |
 
+Only building class image is shown  (convert to png) : 
+| <img src="/figures/lyon_bat.png" width="700" alt="*Raster image*" /> |
+| :----------------------------------------------------------: |
+|                *Raster image Lyon building*                |
 The second version is similar, but the height of the building is an important information in 3D, so the height of the building is saved in an image, the command line is : 
 
 ```
