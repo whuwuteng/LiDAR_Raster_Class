@@ -4,7 +4,6 @@
 
 #include <math.h>
 
-#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -64,8 +63,6 @@ void UpdateWithPriority(unsigned char * pOldClass, double * pOldZ, double * pPri
     }
 }
 
-// for the "projet de recherche"
-// we need to produce a height image
 int main(int argc, char const *argv[])
 {
     if (argc != 4 && argc != 5){
@@ -92,7 +89,7 @@ int main(int argc, char const *argv[])
     // the defaut is building
     else{
         // building is 6
-        Priority[BUILDING] = 1.0;
+        Priority[6] = 1.0;
     }
 
 	CWuLasLib srcLas;
@@ -152,7 +149,7 @@ int main(int argc, char const *argv[])
         int nIndex = y * nCols + x;
         UpdateWithPriority(pLabelClass + nIndex, pZValue + nIndex, Priority, pFullPoint[i].classification, pFullPoint[i].z);
     }
-    //delete []pZValue;               pZValue = NULL;
+    delete []pZValue;               pZValue = NULL;
     
     std::cout << "Convert to raster image..." << std::endl;
 
@@ -161,68 +158,10 @@ int main(int argc, char const *argv[])
 
 	for (int i = 0; i < nRows; ++i){
 		for (int j = 0; j < nCols; ++j){
-			if (pLabelClass[i * nCols + j] > 0){
-                switch (pLabelClass[i * nCols + j]){
-                    case 1 :
-                        pRasterImage[(i * nCols + j) * 3] = 170;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 170;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 170;
-                        break;
-                    case 2 :
-                        pRasterImage[(i * nCols + j) * 3] = 170;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 85;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 0;
-                        break;
-                    case 3 :
-                        pRasterImage[(i * nCols + j) * 3] = 0;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 170;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 170;
-                        break;
-                    case 4 :
-                        pRasterImage[(i * nCols + j) * 3] = 85;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 255;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 85;
-                        break;
-                    case 5 :
-                        pRasterImage[(i * nCols + j) * 3] = 0;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 170;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 0;
-                        break;
-                    case 6 :
-                        pRasterImage[(i * nCols + j) * 3] = 255;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 85;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 85;
-                        break;
-                    case 17 :
-                        pRasterImage[(i * nCols + j) * 3] = 85;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 85;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 255;
-                        break;
-                    case 64 :
-                        pRasterImage[(i * nCols + j) * 3] = 114;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 155;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 111;
-                        break;
-                    case 65 :
-                        pRasterImage[(i * nCols + j) * 3] = 213;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 180;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 60;
-                        break;
-                    case 66 :
-                        pRasterImage[(i * nCols + j) * 3] = 141;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 90;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 153;
-                        break;
-                    case 67 :
-                        pRasterImage[(i * nCols + j) * 3] = 164;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 113;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 88;
-                        break;
-                    default :
-                        pRasterImage[(i * nCols + j) * 3] = 255;
-                        pRasterImage[(i * nCols + j) * 3 + 1] = 255;
-                        pRasterImage[(i * nCols + j) * 3 + 2] = 255;
-                }
+			if (pLabelClass[i * nCols + j] == BUILDING){
+                pRasterImage[(i * nCols + j) * 3] = 255;
+                pRasterImage[(i * nCols + j) * 3 + 1] = 85;
+                pRasterImage[(i * nCols + j) * 3 + 2] = 85;
             }
 			else{
                 pRasterImage[(i * nCols + j) * 3] = 255;
@@ -232,7 +171,7 @@ int main(int argc, char const *argv[])
 		}
 	}
 	
-	//delete []pLabelClass;                  pLabelClass = NULL;
+	delete []pLabelClass;                  pLabelClass = NULL;
 
 	// write the geotif file
 	std::cout << "Save image..." << std::endl;
@@ -242,29 +181,6 @@ int main(int argc, char const *argv[])
     
     SaveImg(szTarTif, pRasterImage, nRows, nCols, 3);
     delete []pRasterImage;                  pRasterImage = NULL;
-
-    char szHeightTif[512] = { 0 };
-    strcpy(szHeightTif, argv[3]);
-    strcpy(strrchr(szHeightTif, '.'), "_height.tif");
-
-    // only keep the building and the other is 0
-    float * pHeight = new float[nRows * nCols];
-    memset(pHeight, 0, sizeof(float) * nRows * nCols);
-    for (int i = 0; i < nRows; ++i){
-		for (int j = 0; j < nCols; ++j){
-            if (pLabelClass[i * nCols + j] == BUILDING){
-                pHeight[i * nCols + j] = pZValue[i * nCols + j];
-            }
-            else{
-                pHeight[i * nCols + j] = 0;
-            }
-        }
-    }
-    delete []pLabelClass;                  pLabelClass = NULL;
-    delete []pZValue;                      pZValue = NULL;
-
-    SaveImg(szHeightTif, pHeight, nRows, nCols, true);
-    delete []pZValue;                      pHeight = NULL;
     
     // save the TFW
     char szTifTFW[512] = { 0 };
@@ -274,11 +190,5 @@ int main(int argc, char const *argv[])
     FILE * fp = fopen(szTifTFW, "w");
     fprintf(fp, "%lf\n%lf\n%lf\n%lf\n%lf\n%lf\n", gridsize, 0.0, 0.0, -gridsize, minx, miny + nRows * gridsize);
     fclose(fp);
-
-    char szTifTFW2[512] = { 0 };
-    strcpy(szTifTFW2, szHeightTif);
-    strcpy(strrchr(szTifTFW2, '.'), ".tfw");
-
-    std::filesystem::copy(szTifTFW, szTifTFW2);
 	return 0;
 }
