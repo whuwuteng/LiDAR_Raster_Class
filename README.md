@@ -119,7 +119,15 @@ Only building class image is shown  (convert to png) :
 The second version is similar, but the height of the building is an important information in 3D, so the height of the building is saved in an image, the command line is : 
 
 ```
-/ConvertLasImageHeigth '/home/TWu-Admin/Lyon/all.copc.laz'  0.15 '/home/TWu-Admin/Lyon/all.copc3.tif'
+./ConvertLasImageHeigth '/home/TWu-Admin/Lyon/all.copc.laz'  0.15 '/home/TWu-Admin/Lyon/all.copc3.tif'
+```
+
+## Large LAS file
+
+In order to process Large LAS file, a new code is available :
+
+```
+./ConvertBigLasImageBat '/home/TWu-Admin/loos/all.copc.laz'  0.15 '/home/TWu-Admin/loos/all.copc.png'
 ```
 
 ## MAINTENANCE

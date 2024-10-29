@@ -44,8 +44,8 @@ bool COpenImageIO::Write(unsigned char *pBuf, int rowIdx)
 {
 	if (! m_bWriteCreate){
 		// default
-		m_ImgSpec.format = OIIO::TypeDesc::UCHAR;
-		m_ImgSpec.attribute("compression", "none");
+		//m_ImgSpec.format = OIIO::TypeDesc::UCHAR;
+		//m_ImgSpec.attribute("compression", "none");
 		m_pImageOut->open(m_strImage, m_ImgSpec);
 		m_bWriteCreate = true;
 	}
