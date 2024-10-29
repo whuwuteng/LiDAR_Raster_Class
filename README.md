@@ -130,6 +130,11 @@ In order to process Large LAS file, a new code is available :
 ./ConvertBigLasImageBat '/home/TWu-Admin/loos/all.copc.laz'  0.15 '/home/TWu-Admin/loos/all.copc.png'
 ```
 
+Only building class image is shown  (convert to png) : 
+| <img src="/figures/all.copc.png" width="700" alt="*Raster image*" /> |
+| :----------------------------------------------------------: |
+|                *Raster image Loos building*                |
+
 ## MAINTENANCE
 
 If you think you have any problem, contact [Teng Wu]<whuwuteng@gmail.com>
