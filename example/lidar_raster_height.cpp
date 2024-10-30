@@ -16,6 +16,7 @@
 // for the double, avoid to use ==
 const double EPS = 1.0e-4;
 unsigned char BUILDING = 6;
+const float NaN = -9999;
 
 // set the priority file
 bool LoadFilePriority(const char * pszFile, double * pPriority)
@@ -256,7 +257,7 @@ int main(int argc, char const *argv[])
                 pHeight[i * nCols + j] = pZValue[i * nCols + j];
             }
             else{
-                pHeight[i * nCols + j] = 0;
+                pHeight[i * nCols + j] = NaN;
             }
         }
     }
@@ -279,6 +280,6 @@ int main(int argc, char const *argv[])
     strcpy(szTifTFW2, szHeightTif);
     strcpy(strrchr(szTifTFW2, '.'), ".tfw");
 
-    std::filesystem::copy(szTifTFW, szTifTFW2);
+    std::filesystem::copy(szTifTFW, szTifTFW2, std::filesystem::copy_options::overwrite_existing);
 	return 0;
 }
