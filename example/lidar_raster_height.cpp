@@ -66,6 +66,7 @@ void UpdateWithPriority(unsigned char * pOldClass, double * pOldZ, double * pPri
 }
 
 // for the "projet de recherche"
+// a new version that only building is needed
 // we need to produce a height image
 int main(int argc, char const *argv[])
 {
