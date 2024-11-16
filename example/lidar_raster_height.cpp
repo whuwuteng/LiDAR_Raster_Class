@@ -4,7 +4,23 @@
 
 #include <math.h>
 
-#include <filesystem>
+// refer to https://stackoverflow.com/questions/55474690/stdfilesystem-has-not-been-declared-after-including-experimental-filesystem
+//#include <filesystem>
+//#include <experimental/filesystem>
+#ifndef __has_include
+  static_assert(false, "__has_include not supported");
+#else
+#  if __cplusplus >= 201703L && __has_include(<filesystem>)
+#    include <filesystem>
+     namespace fs = std::filesystem;
+#  elif __has_include(<experimental/filesystem>)
+#    include <experimental/filesystem>
+     namespace fs = std::experimental::filesystem;
+#  elif __has_include(<boost/filesystem.hpp>)
+#    include <boost/filesystem.hpp>
+     namespace fs = boost::filesystem;
+#  endif
+#endif
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -281,6 +297,7 @@ int main(int argc, char const *argv[])
     strcpy(szTifTFW2, szHeightTif);
     strcpy(strrchr(szTifTFW2, '.'), ".tfw");
 
-    std::filesystem::copy(szTifTFW, szTifTFW2, std::filesystem::copy_options::overwrite_existing);
+    //std::filesystem::copy(szTifTFW, szTifTFW2, std::filesystem::copy_options::overwrite_existing);
+    fs::copy(szTifTFW, szTifTFW2, fs::copy_options::overwrite_existing);
 	return 0;
 }

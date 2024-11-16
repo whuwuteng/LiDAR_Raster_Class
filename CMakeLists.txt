@@ -43,3 +43,4 @@ target_link_libraries(ConvertBigLasImageBat OpenImageIO)
 
 target_link_libraries(ConvertLasImageHeigth WuLasLib)
 target_link_libraries(ConvertLasImageHeigth OpenImageIO)
+target_link_libraries(ConvertLasImageHeigth stdc++fs)
