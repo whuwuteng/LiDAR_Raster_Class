@@ -170,6 +170,7 @@ int main(int argc, char const *argv[])
         int nIndex = y * nCols + x;
         UpdateWithPriority(pLabelClass + nIndex, pZValue + nIndex, Priority, pFullPoint[i].classification, pFullPoint[i].z);
     }
+    delete []pFullPoint;                  pFullPoint = NULL;
     //delete []pZValue;               pZValue = NULL;
     
     std::cout << "Convert to raster image..." << std::endl;
