@@ -37,7 +37,9 @@ The code depends on my code projects :
 
 ### [OpenImageoiioLib](https://github.com/whuwuteng/OpenImageoiioLib)
 
-Because the code depends on  [OpenImageIO](https://sites.google.com/site/openimageio/home) , because we only write Tiff format, so it is easy to install.
+Because the code depends on  [OpenImageIO](https://sites.google.com/site/openimageio/home) , because we only write Tiff format, so it is easy to install. 
+
+If you want to build the [OpenImageIO](https://sites.google.com/site/openimageio/home)  from the source code, you can use this :
 
 ```
 # libtiff
@@ -62,6 +64,17 @@ git clone --recurse https://github.com/OpenImageIO/oiio.git && \
     cmake -DOIIO_BUILD_TESTS=0 -DUSE_OPENGL=0 -DUSE_QT=0 -DUSE_PYTHON=0 -DUSE_FIELD3D=0 -DUSE_FFMPEG=0 -DUSE_OPENJPEG=1 -DUSE_OPENCV=0 -DUSE_OPENSSL=0 -DUSE_PTEX=0 -DUSE_NUKE=0 -DUSE_DICOM=0 ../ && \
     make -j16 && 
     sudo make install
+```
+
+Otherwise, the library can be installed it with command lines if using Ubuntu :
+
+```
+# need to install the dependence of OpenImageIO
+sudo apt-get install libopenexr-dev
+
+# install OpenImageIO
+sudo apt-get install openimageio-tools
+sudo apt-get install libopenimageio-dev
 ```
 
 ### [WuLasLib](https://github.com/whuwuteng/WuLasLib)
