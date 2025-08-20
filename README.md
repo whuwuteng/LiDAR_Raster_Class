@@ -66,7 +66,7 @@ git clone --recurse https://github.com/OpenImageIO/oiio.git && \
     sudo make install
 ```
 
-Otherwise, the library can be installed it with command lines if using Ubuntu :
+Otherwise, the library can be installed  with command lines if using Ubuntu :
 
 ```
 # need to install the dependence of OpenImageIO
